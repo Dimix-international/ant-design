@@ -1,0 +1,14 @@
+.ant-select-item-option-state {
+    position: relative;
+}
+.ant-select-item {
+    position: relative;
+}
+.ant-select-item-option-content {
+    order:2;
+}
+.ant-select-item-option-state {
+    position: absolute;
+    left: 12px;
+    top: 5px;
+}

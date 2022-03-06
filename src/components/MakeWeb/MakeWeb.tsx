@@ -13,6 +13,13 @@ import {
 } from '@ant-design/icons';
 import {Typography, Switch} from "antd";
 import {getTwoToneColor, setTwoToneColor} from '@ant-design/icons';
+import { Select } from 'antd';
+import {SelectComponent} from "../SelectComponent";
+import {SelectMultyJsx} from "../SelectMulty";
+
+const { Option } = Select;
+const select = ['jack', 'lucy', 'Yiminghe'];
+const select2 = ['гусь', 'лебедь', 'дуб'];
 
 export const MakeWeb = () => {
     const [isLoading, setLoading] = useState(false);
@@ -25,6 +32,7 @@ export const MakeWeb = () => {
         setLoading(true);
 
     }
+
 
     const EllipsisMiddle = ({
                                 suffixCount,
@@ -139,7 +147,13 @@ export const MakeWeb = () => {
                 onChange: setEditableStr,
                 tooltip: 'Edit'
             }}>{editableStr}</Paragraph>
-
+            <div>
+                <SelectComponent data={select}/>
+                <SelectComponent data={select2}/>
+            </div>
+            <div>
+                <SelectMultyJsx />
+            </div>
         </div>
     )
 }
