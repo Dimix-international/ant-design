@@ -1,29 +1,40 @@
 import {DatePicker, Image, Tag, Typography} from "antd";
 import {activeData} from "../../data";
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import {CloseOutlined, DownOutlined} from "@ant-design/icons";
 
 export const useTable = () => {
     const [toggleOpenDataPicker, setToggleOpenDataPicker] = useState(false);
-    const onChangeData = (date, dateString) => {
-        console.log(date, dateString);
+
+    const onChangeData = (e) => {
+        console.log(e)
+        setToggleOpenDataPicker(true)
     }
     const openDataPicker = (e) => {
         e.stopPropagation();
         setToggleOpenDataPicker(prev => !prev);
     }
 
+    const onClickHandler = e => e.stopPropagation(); //чтобы не закрывалось когда выбрали дату
+
     const JSXDatapicker = () => {
         return(
-            <div className={'dateColumn'}>
+            <div className={'dateColumn'} onClick={onClickHandler} onBlur={() => setToggleOpenDataPicker(false)}>
                 <Typography.Text> Data</Typography.Text>
                 {!toggleOpenDataPicker ?  <DownOutlined onClick={openDataPicker}/> : <CloseOutlined onClick={openDataPicker}/>}
 
-                <DatePicker className={'datepicker'} open={toggleOpenDataPicker}
-                            onChange={onChangeData}/>
+                <DatePicker onBlur={() => setToggleOpenDataPicker(false)} className={'datepicker'} open={toggleOpenDataPicker}
+                            onChange={(e) => onChangeData(e)}/>
             </div>
         )
     }
+
+    const clickIconHandler = () => {
+        if(toggleOpenDataPicker) {
+            setToggleOpenDataPicker(prev => !prev)
+        }
+    }
+
     const columns = [
         {
             title: 'Name', //імя колонкі
@@ -57,7 +68,7 @@ export const useTable = () => {
             title: 'Category',
             dataIndex: 'category',
             key: 'category',
-            filterIcon:<DownOutlined />,
+            filterIcon:<DownOutlined onClick={clickIconHandler}/>,
             filters: [
                 {
                     text:'Food', //визуально на что кликать
@@ -86,7 +97,7 @@ export const useTable = () => {
             title: 'Subcategory',
             dataIndex: 'subcategory',
             key: 'subcategory',
-            filterIcon:<DownOutlined />,
+            filterIcon:<DownOutlined onClick={clickIconHandler}/>,
             filters: [
                 {
                     text:'Sub#1', //визуально на что кликать
@@ -115,7 +126,7 @@ export const useTable = () => {
             title: 'Company name',
             dataIndex: 'companyName',
             key: 'companyName',
-            filterIcon:<DownOutlined />,
+            filterIcon:<DownOutlined onClick={clickIconHandler}/>,
             filters: [
                 {
                     text:'IBM', //визуально на что кликать
@@ -163,7 +174,7 @@ export const useTable = () => {
             title: 'Status',
             dataIndex: 'status',
             key: 'status',
-            filterIcon:<DownOutlined />,
+            filterIcon:<DownOutlined onClick={clickIconHandler}/>,
             filters: [
                 {
                     text:'Published', //визуально на что кликать
