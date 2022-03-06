@@ -1,14 +1,15 @@
-import {DatePicker, Image, Tag, Typography} from "antd";
+import {DatePicker, Dropdown, Image, Menu, Tag, Typography} from "antd";
 import {activeData} from "../../data";
 import React, {useEffect, useRef, useState} from "react";
-import {CloseOutlined, DownOutlined} from "@ant-design/icons";
+import {CloseOutlined, DownOutlined, MoreOutlined} from "@ant-design/icons";
+import moment from "moment";
 
 export const useTable = () => {
     const [toggleOpenDataPicker, setToggleOpenDataPicker] = useState(false);
+    const [date, setDate] = useState('');
 
-    const onChangeData = (e) => {
-        console.log(e)
-        setToggleOpenDataPicker(true)
+    const onChangeData = (date) => {
+        setDate(date);
     }
     const openDataPicker = (e) => {
         e.stopPropagation();
@@ -23,8 +24,10 @@ export const useTable = () => {
                 <Typography.Text> Data</Typography.Text>
                 {!toggleOpenDataPicker ?  <DownOutlined onClick={openDataPicker}/> : <CloseOutlined onClick={openDataPicker}/>}
 
-                <DatePicker onBlur={() => setToggleOpenDataPicker(false)} className={'datepicker'} open={toggleOpenDataPicker}
-                            onChange={(e) => onChangeData(e)}/>
+                <DatePicker
+                    onBlur={() => setToggleOpenDataPicker(false)} className={'datepicker'} open={toggleOpenDataPicker}
+                            onChange={onChangeData}
+                />
             </div>
         )
     }
@@ -34,6 +37,21 @@ export const useTable = () => {
             setToggleOpenDataPicker(prev => !prev)
         }
     }
+
+    const menu = (
+        <Menu>
+            <Menu.Item key="0">
+                <a target="_blank" rel="noopener noreferrer" href="https://www.antgroup.com">
+                    1st menu item
+                </a>
+            </Menu.Item>
+            <Menu.Item key="1">
+                <a target="_blank" rel="noopener noreferrer" href="https://www.aliyun.com">
+                    2nd menu item
+                </a>
+            </Menu.Item>
+        </Menu>
+    );
 
     const columns = [
         {
@@ -49,15 +67,18 @@ export const useTable = () => {
             render:(text) => <Typography.Text>{text}</Typography.Text>,
         },
         {
-            title: JSXDatapicker(),
+            title: 'Date',
             dataIndex: 'date',
             key: 'date',
             filterIcon:<DownOutlined onClick={() => setToggleOpenDataPicker(!toggleOpenDataPicker)}/>,
-            onFilter: (value, item) => {
-                console.log(item, value)
-                // value - что выбрал пользователь в filters value
-                // item - текущее значение данных
-                return item.date === value
+            filters: [
+                {
+                    text: <DatePicker value={date} onChange={onChangeData}/>,
+                    value: `${moment(date).format('L')}` // что сохранять - логика филтрации
+                },
+            ],
+            onFilter: (value, record) => {
+                console.log(value, record)
             },
             render:(text) => <>
                 <Typography.Text>
@@ -190,8 +211,13 @@ export const useTable = () => {
                 // item - текущее значение данных
                 return item.status === value
             },
-            render:(text) => <Tag>{text.toUpperCase()}</Tag>
+            render:(text) =><Tag>{text.toUpperCase()}</Tag>
         },
+        {
+            render: () => (
+                <Dropdown.Button overlay={menu} icon={<MoreOutlined />} />
+            ),
+        }
     ]
 
 // Each child in a list should have a unique "key"

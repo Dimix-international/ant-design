@@ -1,4 +1,4 @@
-import {DatePicker, Table} from "antd";
+import {DatePicker, Dropdown, Table} from "antd";
 import React, {useState} from "react";
 import {useTable} from "./useTable";
 import './table.css';
@@ -7,7 +7,7 @@ import {DownOutlined} from "@ant-design/icons";
 export const TableComponent = () => {
     const {columns, dataSource, setToggleOpenDataPicker} = useTable();
     return (
-        <div onClick={() => setToggleOpenDataPicker(false)}><Table
+        <div><Table
             dataSource={dataSource}
             columns={columns}
             pagination={{
