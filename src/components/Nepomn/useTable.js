@@ -1,8 +1,19 @@
-import {DatePicker, Dropdown, Image, Menu, Tag, Typography} from "antd";
+import {
+    Button,
+    DatePicker,
+    Dropdown,
+    Image,
+    Input,
+    Menu,
+    Tag,
+    Typography
+} from "antd";
 import {activeData} from "../../data";
 import React, {useEffect, useRef, useState} from "react";
 import {CloseOutlined, DownOutlined, MoreOutlined} from "@ant-design/icons";
 import moment from "moment";
+import './table.css';
+import {DatepickerComponent} from "./DatepickerComponent";
 
 export const useTable = () => {
     const [toggleOpenDataPicker, setToggleOpenDataPicker] = useState(false);
@@ -55,10 +66,33 @@ export const useTable = () => {
 
     const columns = [
         {
+            className:'searchColumn',
             title: 'Name', //імя колонкі
             dataIndex: 'title', // с каким полем из данных работаем
             key: 'title', //для ant (для простоты равен dataIndex
-            render:(text) => <Typography.Text>{text}</Typography.Text>
+            render:(text) => <Typography.Text>{text}</Typography.Text>,
+            filterDropdown:({visible, setSelectedKeys, selectedKeys, confirm, clearFilters}) =>
+                <div className={'input-search'}>
+                    <Input
+                    onPressEnter={() => {
+                        confirm()
+                    }}
+                    value={selectedKeys[0]}
+                    onBlur={() => {
+                        confirm() //выполняет поиск и закрывает dropdown
+                    }}
+                    onChange={(e) => {
+                        setSelectedKeys(e.target.value ? [e.target.value] : [])
+                        confirm({closeDropdown: false}) //не будет закрываться dropdown
+                    }}
+                />
+                <Button onClick={() => confirm()}>search</Button>
+                    <Button onClick={() => clearFilters()}>reset</Button>
+                </div>
+            ,
+            onFilter:(value, record) =>  record.title.toLowerCase().includes(value.toLowerCase()),
+            filterDropdownVisible: true,
+
         },
         {
             title: 'Number',
@@ -70,13 +104,16 @@ export const useTable = () => {
             title: 'Date',
             dataIndex: 'date',
             key: 'date',
-            filterIcon:<DownOutlined onClick={() => setToggleOpenDataPicker(!toggleOpenDataPicker)}/>,
-            filters: [
-                {
-                    text: <DatePicker value={date} onChange={onChangeData}/>,
-                    value: `${moment(date).format('L')}` // что сохранять - логика филтрации
-                },
-            ],
+            filterIcon:<DownOutlined onClick={() => setToggleOpenDataPicker(prev => !prev)}/>,
+            filterDropdown:({visible, setSelectedKeys, selectedKeys, confirm, clearFilters}) => <DatepickerComponent
+                visible={visible}
+                setSelectedKeys={setSelectedKeys}
+                selectedKeys={selectedKeys}
+                confirm={confirm}
+                clearFilters={clearFilters}
+                toggleOpenDataPicker={toggleOpenDataPicker}
+                setToggleOpenDataPicker={setToggleOpenDataPicker}
+            />,
             onFilter: (value, record) => {
                 console.log(value, record)
             },

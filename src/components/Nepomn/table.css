@@ -1,4 +1,18 @@
+.ant-picker {
+    width: 1px !important;
+    height: 1px !important;
+    opacity: 0 !important;
+    transition: none !important;
+    background-color: transparent !important;
+}
 
+.customPicker  {
+    top: 42px !important;
+    transition: none !important;
+}
+.ant-table-filter-trigger {
+    transition: none !important;
+}
 .dateColumn {
     position: relative;
     width: 100%;

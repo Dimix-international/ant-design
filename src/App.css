@@ -12,3 +12,6 @@
     left: 12px;
     top: 5px;
 }
+.ant-picker-date-panel {
+    display: none !important;
+}
