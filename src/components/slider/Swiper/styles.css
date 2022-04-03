@@ -1,0 +1,68 @@
+/*.container {*/
+/*    padding: 50px 0;*/
+/*}*/
+/*.image-slider {*/
+/*    width: 500px;*/
+/*    height: 300px;*/
+/*    border: 1px solid red;*/
+/*}*/
+/*.image-slider__image{*/
+/*    position: relative;*/
+/*    height: 100%;*/
+/*}*/
+/*.image-slider__image img{*/
+/*    position: absolute;*/
+/*    top: 0;*/
+/*    left: 0;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    object-fit: cover;*/
+/*}*/
+
+/*!*стрелки перемещения - иконочный шрифт*!*/
+/*.image-slider .swiper-button-prev::after,*/
+/*.image-slider .swiper-button-next::after {*/
+/*    color: black;*/
+/*    font-size: 60px;*/
+/*}*/
+
+/*!*булеты*!*/
+/*.image-slider .swiper-pagination-bullet {*/
+/*    width: 20px;*/
+/*    height: 20px;*/
+/*    line-height: 20px;*/
+/*    font-size: 14px;*/
+/*    background-color: #f64c08;*/
+/*}*/
+
+/*.image-slider .swiper-pagination-fraction {*/
+/*    font-size: 20px;*/
+/*    color: red;*/
+/*}*/
+
+/*.image-slider .swiper-pagination-progressbar-fill {*/
+/*    background-color: yellow !important;*/
+/*}*/
+
+/*!*скролл*!*/
+/*.image-slider .swiper-scrollbar-drag {*/
+/*    cursor: pointer;*/
+/*    background-color: yellow !important;*/
+/*}*/
+
+/*!*автоширина ,если slidesPerView={"auto} *!*/
+/*!*.image-slider .swiper-slide {*!*/
+/*!*    width:auto;*!*/
+/*!*}*!*/
+/*!*эффект куб *!*/
+/*!*.image-slider {*/
+/*    width: 500px;*/
+/*}*!*/
+
+
+/*.swiper-slide-active {*/
+/*    width: 50% !important;*/
+/*}*/
+/*.swiper-slide-next, .swiper-slide-prev {*/
+/*    width: 25% !important;*/
+/*}*/
